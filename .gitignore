@@ -1,0 +1,64 @@
+# Environment files and local credentials
+.env
+.env.*
+!.env.example
+credentials.*
+secrets.*
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+.cache/
+tmp/
+temp/
+
+# Large/local datasets
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Generated model files
+models/*
+!models/.gitkeep
+
+# Generated outputs
+outputs/*
+!outputs/figures/
+!outputs/reports/
+outputs/figures/*
+outputs/reports/*
+!outputs/figures/.gitkeep
+!outputs/reports/.gitkeep
