@@ -6,6 +6,28 @@ engineers customer and merchant behavioral features, compares multiple
 classification models, and provides an interactive dashboard for exploring
 fraud patterns and demonstrating predictions.
 
+## Dashboard Preview
+
+The Streamlit dashboard provides an interactive interface for exploring
+transaction fraud patterns, reviewing model evaluation results, and
+demonstrating fraud-risk predictions.
+
+### Overview
+
+![Dashboard Overview](screenshots/overview.png)
+
+### Fraud Analysis
+
+![Fraud Analysis](screenshots/fraud-analysis.png)
+
+### Model Evaluation
+
+![Model Evaluation](screenshots/model-evaluation.png)
+
+### Fraud Prediction
+
+![Fraud Prediction](screenshots/fraud-prediction.png)
+
 ## Project Status
 
 Core machine learning pipeline and dashboard implemented.
