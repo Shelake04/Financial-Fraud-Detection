@@ -6,6 +6,7 @@ engineers customer and merchant behavioral features, compares multiple
 classification models, and provides an interactive dashboard for exploring
 fraud patterns and demonstrating predictions.
 
+
 ## Dashboard Preview
 
 The Streamlit dashboard provides an interactive interface for exploring
@@ -14,19 +15,19 @@ demonstrating fraud-risk predictions.
 
 ### Overview
 
-![Dashboard Overview](screenshots/overview.png)
+![Dashboard Overview](overview.png)
 
 ### Fraud Analysis
 
-![Fraud Analysis](screenshots/fraud-analysis.png)
+![Fraud Analysis](fraud-analysis.png)
 
 ### Model Evaluation
 
-![Model Evaluation](screenshots/model-evaluation.png)
+![Model Evaluation](model-evaluation.png)
 
 ### Fraud Prediction
 
-![Fraud Prediction](screenshots/fraud-prediction.png)
+![Fraud Prediction](fraud-prediction.png)
 
 ## Project Status
 
