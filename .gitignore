@@ -56,9 +56,19 @@ models/*
 
 # Generated outputs
 outputs/*
+
+# Allow these directories
 !outputs/figures/
 !outputs/reports/
+
+# Ignore their contents by default
 outputs/figures/*
 outputs/reports/*
+
+# Allow dashboard figures and reports
+!outputs/figures/*.png
+!outputs/reports/*.md
+
+# Keep directory placeholders
 !outputs/figures/.gitkeep
 !outputs/reports/.gitkeep
