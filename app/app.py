@@ -12,6 +12,7 @@ from uuid import uuid4
 import numpy as np
 import pandas as pd
 import streamlit as st
+import src.prediction_service as prediction_service
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -425,9 +426,7 @@ def _render_fraud_prediction() -> None:
                 columns=SYNTHETIC_HISTORY_COLUMNS,
             )
             try:
-                from src.prediction_service import PredictionService
-
-                service = PredictionService(
+                service = prediction_service.PredictionService(
                     synthetic_history,
                     history_complete_through=SYNTHETIC_HISTORY_COMPLETE_THROUGH,
                 )

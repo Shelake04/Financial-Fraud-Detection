@@ -1,146 +1,194 @@
 # Financial Fraud Detection Using Machine Learning
+A machine learning project that analyzes BankSim transactions, engineers customer and merchant behavioral features, compares classification models, and presents results in an interactive Streamlit dashboard.
 
-A machine learning-based financial fraud detection system built using Python, Pandas, Scikit-learn, XGBoost, and Streamlit.
+Project status: The data preparation and model evaluation pipeline, prediction service, automated tests, and dashboard are implemented. The dashboard's fraud-prediction page is a synthetic demonstration only; operational fraud prediction is not enabled.
 
 ## Dashboard Preview
 
-The Streamlit dashboard provides an interactive interface for exploring transaction fraud patterns, reviewing model evaluation results, and demonstrating fraud-risk predictions.
+The dashboard contains four pages for exploring the project and its results.
 
 ### Overview
-
-![Dashboard Overview](overview.png)
+![Dashboard Overview](screenshots/overview.png)
 
 ### Fraud Analysis
-
-![Fraud Analysis](fraud-analysis.png)
+![Fraud Analysis](screenshots/fraud-analysis.png)
 
 ### Model Evaluation
-
-![Model Evaluation](model-evaluation.png)
+![Model Evaluation](screenshots/model-evaluation.png)
 
 ### Fraud Prediction
+![Fraud Prediction](screenshots/fraud-prediction.png)
 
-![Fraud Prediction](fraud-prediction.png)
 
-## Project Status
-
-The project analyzes financial transaction patterns, engineers customer and merchant behavioral features, compares machine learning classification models, and provides an interactive dashboard for exploring fraud patterns and demonstrating predictions.
-
-> **Project status:** The core machine learning pipeline, prediction service, automated tests, and interactive dashboard have been implemented. Operational fraud prediction is not enabled.
 
 ## Table of Contents
 
 - [Project Overview](#project-overview)
-- [Problem Statement](#problem-statement)
 - [Objectives](#objectives)
 - [Dataset](#dataset)
 - [Technology Stack](#technology-stack)
 - [Project Structure](#project-structure)
-- [Project Workflow](#project-workflow)
-- [Feature Engineering](#feature-engineering)
+- [Workflow](#workflow)
+- [Feature Engineering and Leakage Prevention](#feature-engineering-and-leakage-prevention)
 - [Machine Learning Models](#machine-learning-models)
 - [Model Evaluation](#model-evaluation)
 - [Prediction Service](#prediction-service)
 - [Interactive Dashboard](#interactive-dashboard)
 - [Automated Testing](#automated-testing)
 - [Installation and Execution](#installation-and-execution)
-- [Project Limitations](#project-limitations)
+- [Limitations](#limitations)
 - [Future Improvements](#future-improvements)
 
 ## Project Overview
+Financial transaction fraud detection is a classification problem: transaction attributes and historical behavior are used to estimate whether a transaction may be fraudulent.
 
-Financial fraud detection is a classification problem in which transaction data is analyzed to identify potentially fraudulent activity.
-
-This project uses the BankSim dataset to explore transaction patterns, create behavioral features from historical customer and merchant activity, train classification models, and evaluate their ability to distinguish fraudulent transactions from legitimate ones.
-
-The project also includes a prediction service and a Streamlit dashboard for data exploration, model evaluation, and synthetic prediction demonstrations.
+This project uses the BankSim dataset to explore transaction patterns, derive customer and merchant behavioral features from earlier activity, train classification models, and evaluate their ability to distinguish fraudulent transactions from legitimate ones. It also includes a prediction service and a Streamlit dashboard.
 
 ### Key Features
+Original dataset inspection and development-sample creation
 
-- BankSim dataset inspection and sampling
-- Exploratory Data Analysis (EDA)
-- Customer and merchant behavioral feature engineering
-- Chronological training, validation, and test splits
-- Data preprocessing
-- Logistic Regression, Random Forest, and XGBoost model comparison
-- Validation-based model and decision-threshold selection
-- Final test evaluation
-- Historical transaction feature store
-- Model prediction service
-- Interactive Streamlit dashboard
-- Automated testing with Pytest
+Exploratory Data Analysis (EDA)
 
-## Problem Statement
+Customer and merchant behavioral feature engineering
 
-Financial transaction fraud can cause financial losses for customers and financial institutions. Analyzing transaction characteristics and historical behavioral patterns can help identify suspicious activity.
+Chronological training, validation, and test partitions
 
-The objective of this project is to develop and evaluate a machine learning pipeline that classifies financial transactions using transaction attributes and behavioral information derived from previous customer and merchant activity.
+Data preprocessing
+
+Logistic Regression, Random Forest, and XGBoost comparison
+
+Validation-based model and decision-threshold selection
+
+Held-out test evaluation
+
+In-memory behavioral feature store
+
+Model prediction service
+
+Interactive Streamlit dashboard
+
+Automated tests using Pytest
 
 ## Objectives
 
-- Analyze financial transaction data.
-- Explore differences between legitimate and fraudulent transactions.
-- Identify transaction categories and behavioral patterns associated with fraud in the development sample.
-- Engineer behavioral features using historical transaction activity.
-- Compare multiple machine learning classification algorithms.
-- Evaluate models using appropriate classification metrics.
-- Build a reusable prediction service.
-- Develop an interactive dashboard for data analysis and model evaluation.
-- Demonstrate model predictions using synthetic transaction inputs.
+Analyze transaction data and explore fraud patterns.
+
+Engineer behavioral features from prior customer and merchant activity.
+
+Prevent temporal leakage during feature generation and evaluation.
+
+Compare multiple classification algorithms.
+
+Select a model and decision threshold using validation data.
+
+Evaluate the selected model on a held-out test set.
+
+Build a reusable prediction service and a dashboard for reviewing results.
+
+Demonstrate the prediction interface with synthetic inputs without presenting it as an operational fraud system.
 
 ## Dataset
 
-This project uses the BankSim dataset.
+This project uses the BankSim dataset. The original dataset is not included in this repository; obtain a compatible copy separately.
 
-### Original Dataset
+Original Dataset
 
-| Description | Count |
-|---|---:|
-| Total transactions | 594,643 |
-| Fraudulent transactions | 7,200 |
-| Legitimate transactions | 587,443 |
-| Fraud prevalence | Approximately 1.21% |
+Description
 
-### Development Sample
+Count
 
-A 50,000-row development sample was created for experimentation.
+Total transactions
 
-| Description | Count |
-|---|---:|
-| Total sampled transactions | 50,000 |
-| Fraudulent transactions | 7,200 |
-| Legitimate transactions | 42,800 |
-| Fraud prevalence | 14.4% |
+594,643
 
-The sampling procedure retained all 7,200 fraudulent transactions and selected 42,800 legitimate transactions. Sampling used a fixed random seed and preserved the chronological step structure.
+Fraudulent transactions
 
-**Important:** The development sample has a substantially higher fraud prevalence than the original dataset. Precision, fraud rates, and other evaluation results obtained from this enriched sample may not represent performance on naturally occurring financial transactions.
+7,200
 
-The original dataset is not included in the Git repository. Users must obtain a compatible dataset separately.
+Legitimate transactions
+
+587,443
+
+Fraud prevalence
+
+Approximately 1.21%
+
+Development Sample
+
+The 50,000-row development sample retains all 7,200 fraud records and samples 42,800 legitimate records using a fixed random seed.
+
+Description
+
+Count
+
+Total sampled transactions
+
+50,000
+
+Fraudulent transactions
+
+7,200
+
+Legitimate transactions
+
+42,800
+
+Fraud prevalence
+
+14.4%
+
+Important sampling caveat: This is a fraud-enriched sample, not a naturally representative sample of the original transaction population. Sample-based fraud rates and evaluation metrics—particularly precision—may not reflect performance at the original fraud prevalence or in a real financial institution.
 
 ## Technology Stack
 
-| Technology | Purpose |
-|---|---|
-| Python | Main programming language |
-| Pandas | Data manipulation and analysis |
-| NumPy | Numerical operations |
-| Scikit-learn | Preprocessing, classification utilities, and evaluation |
-| XGBoost | Gradient-boosted classification |
-| Matplotlib | Data visualization |
-| Seaborn | Statistical visualization |
-| Plotly | Interactive visualization |
-| Streamlit | Interactive dashboard |
-| Joblib | Saving and loading trained models and preprocessing artifacts |
-| Pytest | Automated testing |
-| Git | Version control |
-| GitHub | Source-code hosting |
+Technology
+
+Purpose
+
+Python
+
+Main programming language
+
+Pandas and NumPy
+
+Data manipulation and numerical operations
+
+Scikit-learn
+
+Preprocessing, classification utilities, and evaluation
+
+XGBoost
+
+Gradient-boosted classification
+
+Matplotlib and Seaborn
+
+Data visualization
+
+Plotly
+
+Interactive visualization
+
+Streamlit
+
+Dashboard
+
+Joblib
+
+Saving and loading models and preprocessing artifacts
+
+Pytest
+
+Automated testing
+
+Git and GitHub
+
+Version control and source-code hosting
 
 ## Project Structure
 
-The repository is organized into the following main directories:
+The repository's main components are organized as follows. Some generated data, figures, reports, and model artifacts are created locally when the pipeline runs and may be excluded from version control.
 
-```text
 Financial-Fraud-Detection/
 ├── app/
 │   └── app.py
@@ -172,50 +220,60 @@ Financial-Fraud-Detection/
 ├── .gitignore
 ├── README.md
 └── requirements.txt
-```
 
-Generated datasets, trained model artifacts, and other local outputs are excluded from version control.
+## Workflow
 
-## Project Workflow
+Inspect the original dataset.
 
-The project follows this workflow:
+Create the fraud-enriched development sample.
 
-1. Inspect the original dataset.
-2. Create a development sample.
-3. Perform Exploratory Data Analysis.
-4. Engineer customer and merchant behavioral features.
-5. Split the data chronologically into training, validation, and test sets.
-6. Fit the preprocessing pipeline using training data.
-7. Train Logistic Regression, Random Forest, and XGBoost.
-8. Compare models using validation metrics.
-9. Select the final model and decision threshold using validation data.
-10. Evaluate the selected model on the held-out test set.
-11. Develop the historical feature store and prediction service.
-12. Integrate the prediction service and model artifacts with the Streamlit dashboard.
-13. Run automated tests.
+Perform exploratory data analysis.
 
-## Feature Engineering
+Engineer customer and merchant behavioral features.
+
+Split transactions chronologically into training, validation, and test partitions.
+
+Fit preprocessing on training data.
+
+Train Logistic Regression, Random Forest, and XGBoost.
+
+Compare candidate models using validation metrics.
+
+Select the final model and decision threshold using validation data.
+
+Evaluate the selected model on the held-out test partition.
+
+Use the feature store and prediction service to manage historical features and scoring.
+
+Display analysis and saved evaluation results in the Streamlit dashboard.
+
+Run the automated test suite.
+
+## Feature Engineering and Leakage Prevention
 
 The project combines transaction attributes with historical customer and merchant behavior.
 
-### Behavioral Features
+Examples of Behavioral Features
 
-Examples include:
+Customer's previous transaction count
 
-- Customer's previous transaction count
-- Customer's previous transaction amount total
-- Customer's previous transaction amount mean
-- Steps since the customer's previous activity
-- Merchant's previous transaction count
-- Merchant's previous transaction amount total
-- Merchant's previous transaction amount mean
-- Steps since the merchant's previous activity
+Customer's previous transaction amount total and mean
 
-### Prevention of Temporal Leakage
+Steps since the customer's previous activity
 
-Historical behavioral features are calculated using strictly earlier transaction steps.
+Merchant's previous transaction count
 
-Transactions belonging to the same step use the same pre-step history snapshot. Historical state is updated only after the entire step has been processed.
+Merchant's previous transaction amount total and mean
+
+Steps since the merchant's previous activity
+
+Temporal Leakage Prevention
+
+Behavioral features are computed from strictly earlier transaction steps.
+
+Transactions at the same step use the same pre-step history snapshot.
+
+Historical state is updated only after all transactions for that step have been processed.
 
 Customer and merchant identifiers are used to derive behavioral features rather than being passed directly to the model as input features.
 
@@ -225,242 +283,236 @@ The preprocessing pipeline is fitted on training data and then applied to valida
 
 ## Machine Learning Models
 
-Three classification algorithms were trained and compared.
+Logistic Regression
 
-### 1. Logistic Regression
+Used as a baseline classifier for estimating the probability that a transaction is fraudulent.
 
-Logistic Regression provides a baseline classification model for estimating the probability that a transaction is fraudulent.
+Random Forest
 
-### 2. Random Forest
+Uses an ensemble of decision trees to model nonlinear relationships in transaction data.
 
-Random Forest combines multiple decision trees to model nonlinear relationships between transaction attributes and fraud outcomes.
+XGBoost
 
-### 3. XGBoost
+Uses gradient-boosted decision trees to learn complex patterns in transaction attributes and engineered behavioral features.
 
-XGBoost uses gradient-boosted decision trees to learn complex patterns in transaction data.
+Model Selection
 
-### Model Selection
-
-XGBoost was selected because it achieved the highest validation Average Precision among the evaluated models.
-
-Model selection and decision-threshold selection were performed using validation data. The held-out test set was evaluated separately.
+XGBoost was selected because it achieved the highest validation Average Precision among the evaluated candidates. Model and threshold selection used validation data; the held-out test set was kept separate for final evaluation.
 
 ## Model Evaluation
 
-The selected XGBoost model produced the following results on the held-out test split.
+The selected XGBoost model produced the following results on the held-out test partition.
 
-### Test Metrics
+Test Metrics
 
-| Metric | Result |
-|---|---:|
-| Average Precision (AP) | 0.992662 |
-| ROC-AUC | 0.998882 |
-| Precision | 0.938322 |
-| Recall | 0.966667 |
-| F1-score | 0.952283 |
-| Decision threshold | 0.718754 |
+Metric
 
-### Confusion Matrix
+Result
 
-| Actual / Predicted | Legitimate | Fraud |
-|---|---:|---:|
-| Legitimate | 6,360 | 61 |
-| Fraud | 32 | 928 |
+Average Precision (AP)
 
-### Interpretation
+0.992662
 
-On the held-out test split:
+ROC-AUC
 
-- 928 fraudulent transactions were correctly identified.
-- 32 fraudulent transactions were missed.
-- 61 legitimate transactions were incorrectly flagged as fraudulent.
-- 6,360 legitimate transactions were correctly classified.
+0.998882
 
-These results describe performance on the fraud-enriched development sample. They do not establish that equivalent results will be achieved on a naturally distributed transaction population.
+Precision
 
-The decision threshold reflects the threshold selected during validation and should not be assumed to be optimal for every financial institution or operational setting.
+0.938322
+
+Recall
+
+0.966667
+
+F1-score
+
+0.952283
+
+Validation-selected decision threshold
+
+0.71875411
+
+Confusion Matrix
+
+Rows represent actual classes and columns represent predicted classes.
+
+Actual / Predicted
+
+Legitimate
+
+Fraud
+
+Legitimate
+
+6,360
+
+61
+
+Fraud
+
+32
+
+928
+
+On this test partition:
+
+928 fraudulent transactions were correctly identified.
+
+32 fraudulent transactions were missed.
+
+61 legitimate transactions were incorrectly flagged as fraudulent.
+
+6,360 legitimate transactions were correctly classified.
+
+Interpretation caveat: These results describe the fraud-enriched development sample. They do not establish that the same metrics will be achieved on naturally distributed transactions. The validation-selected threshold should not be assumed optimal for every institution or operational setting.
 
 ## Prediction Service
 
-The prediction service integrates the saved XGBoost model with the saved preprocessing pipeline and historical behavioral feature store.
+The prediction service integrates the saved XGBoost model, preprocessing artifacts, and historical behavioral feature store. Its responsibilities include:
 
-Its responsibilities include:
+Validating transaction inputs
 
-- Validating transaction inputs
-- Generating behavioral features
-- Applying the fitted preprocessing pipeline
-- Calculating fraud probabilities
-- Applying the selected decision threshold
-- Validating model and preprocessing compatibility
-- Managing historical state during prediction
+Generating behavioral features
 
-The service commits historical state only after successful scoring and validation.
+Applying the fitted preprocessing pipeline
 
-The feature store is currently in-memory. It does not provide durable storage or thread-safe state management.
+Calculating fraud probabilities
+
+Applying the selected decision threshold
+
+Checking model and preprocessing compatibility
+
+Managing historical state during prediction
+
+Historical state is committed only after successful scoring and validation. The feature store is currently in memory; it does not provide durable storage or thread-safe state management.
 
 ## Interactive Dashboard
 
-The project includes a Streamlit dashboard with four pages.
+The Streamlit dashboard contains four pages.
 
-### 1. Overview
+1. Overview
 
-Displays project information and a summary of the selected model's evaluation results.
+Summarizes the project workflow and selected-model evaluation results.
 
-### 2. Fraud Analysis
+2. Fraud Analysis
 
-Presents visualizations covering:
+Shows visualizations for transaction amounts, fraud patterns by category, fraud rates across transaction steps, recorded age codes, and customer and merchant activity. BankSim age values are categorical codes; they should not be interpreted as verified numerical ages.
 
-- Transaction amounts
-- Fraud patterns by category
-- Fraud rates across transaction steps
-- Age-code patterns
-- Customer and merchant activity
+3. Model Evaluation
 
-The age values in the BankSim dataset are categorical codes, not actual numerical ages.
+Displays model comparison, validation metrics, and held-out test results from generated reports. This page presents saved results; it does not independently retrain or reevaluate the model.
 
-### 3. Model Evaluation
+4. Fraud Prediction
 
-Displays validation metrics, final test metrics, and model comparison information using the generated reports.
+Provides a synthetic demonstration using fabricated transaction inputs and empty in-memory behavioral history. It is not an operational fraud assessment. Predictions from this page must not be used to make decisions about real transactions.
 
-This page displays existing evaluation results; it does not independently retrain or reevaluate the model.
-
-### 4. Fraud Prediction
-
-Provides a synthetic transaction demonstration using the saved model and preprocessing artifacts.
-
-Users can enter transaction attributes and observe the resulting probability and threshold-based classification.
-
-**The prediction interface is a demonstration, not an operational fraud detection service.** It uses fabricated inputs and empty in-memory behavioral history. Consequently, its predictions should not be interpreted as decisions about real financial transactions.
-
-Operational prediction remains disabled because a trusted transaction history source, persistent state management, and additional production safeguards have not been implemented.
+Operational prediction remains disabled because trusted transaction history, persistent and concurrency-safe state management, and production safeguards have not been implemented.
 
 ## Automated Testing
 
-The project contains automated tests for:
+The tests cover behavioral feature generation, feature-store state management, prediction-service validation, preprocessing/model compatibility, probability and classification outputs, dashboard input validation, and dashboard error handling.
 
-- Historical behavioral feature generation
-- Transaction history state management
-- Prediction service validation
-- Preprocessing and model compatibility
-- Probability and classification outputs
-- Dashboard input validation
-- Dashboard error handling
+The test suite was run in a fresh virtual environment during development:
 
-**87 tests passed.**
+python -m pytest -q
 
-The reported result represents the test run performed during development.
-Run the test suite again after making changes to verify the current state
-of the project.
-
-Run the tests from the repository root:
-
-```bash
-python -m pytest tests/ -v
-```
-
-The reported result represents the test run performed during development. Run the test suite again after making changes to verify the current state of the project.
+Verified result at the time of this README revision: 87 passed. Run the tests again after changing code or dependencies to verify the current state.
 
 ## Installation and Execution
 
-### Prerequisites
+Prerequisites
 
-- Python installed on your computer
-- Git
-- A compatible BankSim dataset obtained separately
+Python 3.13 (the development environment used for verification)
 
-### 1. Clone the Repository
+Git
 
-```bash
+A compatible BankSim CSV file obtained separately
+
+1. Clone the Repository
+
+1. Clone the Repository
+
+```powershell
 git clone https://github.com/Shelake04/Financial-Fraud-Detection.git
 cd Financial-Fraud-Detection
 ```
 
-### 2. Create a Virtual Environment
+2. Create and Activate a Virtual Environment
 
-```bash
-python -m venv .venv
-```
-
-Activate the environment in Windows PowerShell:
+On Windows PowerShell:
 
 ```powershell
+python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
+If PowerShell blocks environment activation, use a terminal configuration you are permitted to run, or invoke the environment's Python directly as .\.venv\Scripts\python.exe.
 
-### 3. Install Dependencies
+3. Install Dependencies
 
-```bash
+```powershell
+python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-### 4. Prepare the Dataset and Artifacts
+4. Configure the Dataset Path
 
-The prediction service and dashboard require the saved XGBoost model and preprocessing artifacts. These generated files are excluded from the repository.
+The original BankSim dataset is not stored in this repository. Set the BANKSIM_CSV environment variable to the full path of your downloaded CSV file in the current PowerShell session. For example:
 
-Obtain a compatible BankSim dataset and place it in the location expected by the data preparation scripts.
+```powershell
+$env:BANKSIM_CSV = "D:\path\to\your\bs140513_032310.csv"
+```
+Replace the example path with the actual location of your dataset. Keep the original dataset out of version control.
 
-Run the project's data inspection, sample creation, preprocessing, and model training scripts in the appropriate order. These steps generate the data and model artifacts required by the dashboard.
+5. Run the Data and Model Pipeline
 
-The model evaluation script can be run separately to evaluate the trained model on the prepared test dataset.
+From the repository root, run the scripts in this order:
 
-**Note:** Confirm the expected dataset path and script execution order in the source code before running the pipeline.
-
-### 5. Run the Dashboard
-
-From the repository root, run:
-
-```bash
-python -m streamlit run app/app.py
+```powershell
+python src/inspect_dataset.py
+python src/create_sample.py
+python src/eda.py
+python src/prepare_data.py
+python src/train_model.py
+python src/evaluate_model.py
 ```
 
-Open the local address displayed in the terminal.
+These scripts inspect the source data, create the development sample, generate EDA outputs, prepare data, train and select the model, and evaluate it. The dashboard depends on the required generated reports and model/preprocessing artifacts, so prepare these artifacts before launching the application.
 
-The dashboard requires the necessary prepared-data, preprocessing, and model artifacts to have been generated first.
+6. Run the Tests
 
-## Project Limitations
+```powershell
+python -m pytest -q
+```
+7. Launch the Dashboard
 
-- The development sample has an artificially elevated fraud prevalence.
-- Evaluation results may not generalize to naturally occurring financial transactions.
-- The dashboard prediction demonstration uses fabricated transaction data.
-- The demonstration begins with empty in-memory behavioral history.
-- The feature store is not persistent or thread-safe.
-- A trusted, production-quality historical transaction source has not been integrated.
-- Production monitoring, audit logging, and operational safeguards remain future work.
-- The application is not ready for operational fraud decisions.
+```powershell
+python -m streamlit run app/app.py
+```
+Open the local address printed in the terminal. Keep the terminal running while using the dashboard.
+
+## Limitations
+
+The development sample has an artificially elevated fraud prevalence.
+
+Evaluation results may not generalize to naturally occurring financial transactions.
+
+The prediction page uses synthetic inputs and empty in-memory behavioral history.
+
+The feature store is not persistent or thread-safe.
+
+A trusted, production-quality historical transaction source has not been integrated.
+
+Production monitoring, audit logging, and operational safeguards remain future work.
+
+The application is not ready for operational fraud decisions.
 
 ## Future Improvements
 
-- Evaluate performance on a dataset with a representative fraud prevalence.
-- Integrate a trusted transaction history source.
-- Implement persistent and concurrency-safe behavioral state management.
-- Add data-quality monitoring.
-- Add model-performance monitoring and drift detection.
-- Implement prediction auditing and operational safeguards.
-- Establish a reproducible model training and deployment workflow.
+- Evaluate on data with representative fraud prevalence.
+- Integrate a trusted transaction-history source.
+- Implement persistent, concurrency-safe behavioral state management.
+- Add data-quality and model-performance monitoring.
+- Add drift detection and prediction auditing.
+- Implement operational safeguards and a reproducible model training/deployment workflow.
 - Explore Apache Kafka and PySpark Structured Streaming for transaction processing.
-
-## Author
-
-## Dashboard Preview
-
-The Streamlit dashboard provides an interactive interface for exploring transaction fraud patterns, reviewing model evaluation results, and demonstrating fraud-risk predictions.
-
-### Overview
-
-![Dashboard Overview](overview.png)
-
-### Fraud Analysis
-
-![Fraud Analysis](fraud-analysis.png)
-
-### Model Evaluation
-
-![Model Evaluation](model-evaluation.png)
-
-### Fraud Prediction
-
-![Fraud Prediction](fraud-prediction.png)
-
-## Project Status
-
-The project analyzes financial transaction patterns, engineers customer and merchant behavioral features, compares machine learning classification models, and provides an interactive dashboard for exploring fraud patterns and demonstrating predictions.

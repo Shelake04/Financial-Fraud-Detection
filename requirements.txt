@@ -6,6 +6,6 @@ matplotlib
 seaborn
 plotly
 joblib
-streamlit
+streamlit==1.54.0
 python-dotenv
 pytest

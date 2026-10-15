@@ -15,8 +15,14 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+import os
 
-SOURCE_CSV = Path(r"D:\Fraud Detection\bs140513_032310.csv")
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+if os.environ.get("BANKSIM_CSV"):
+    SOURCE_CSV = Path(os.environ["BANKSIM_CSV"]).expanduser().resolve()
+else:
+    SOURCE_CSV = PROJECT_ROOT / "data" / "bs140513_032310.csv"
 OUTPUT_CSV = Path(__file__).resolve().parents[1] / "data" / "processed" / "banksim_sample.csv"
 RANDOM_SEED = 42
 TARGET_ROW_COUNT = 50_000
